@@ -1,172 +1,190 @@
-# LangGraph Course
-
-**Video:** https://www.youtube.com/watch?v=jGg_1h0qzaM
-
-Repository for all of the code written for the FreeCodeCamp LangGraph Course, including solutions for all exercises. This repo provides practical examples of using [LangGraph](https://github.com/langchain-ai/langgraph) for building agent-based applications through Python scripts and interactive Jupyter notebooks.
+# 🚀 Agentic AI on Minikube
 
 ---
 
-## Table of Contents
+# 📘 Agents Overview
 
-- [Overview](#overview)
-- [Repository Structure](#repository-structure)
-- [Getting Started (zsh/Mac)](#getting-started-zshmac)
-  - [Using pyenv and uv](#using-pyenv-and-uv)
-- [Usage](#usage)
-- [Exercises](#exercises)
-- [Requirements](#requirements)
+## 🤖 Agent Bot
+
+* Simple linear flow: `START → LLM → END`
+* Stateless (no memory)
+
 
 ---
 
-## Overview
+## 🧠 Memory Agent
 
-LangGraph is a Python framework for designing and managing the flow of tasks in your application using graph structures. This course demonstrates LangGraph concepts through step-by-step exercises, agent implementations, and Jupyter notebooks.
+* Maintains conversation history per session
+* Uses in-memory session store
 
----
-
-## Repository Structure
-
-```
-LangGraph-Course/
-├── Agents/            # Python agents for various tasks (e.g., RAG_Agent, Drafter)
-├── Exercises/         # Jupyter notebooks with exercise solutions
-├── Graphs/            # Jupyter notebooks illustrating LangGraph concepts
-├── requirements.txt   # Python dependencies
-└── README.md          # This file
-```
-
-**Notable Directories:**
-- **Agents/**: Python scripts for agents such as Retrieval-Augmented Generation (RAG) and document drafting.
-- **Exercises/**: Jupyter notebooks for each exercise (e.g. `Exercise_Graph1.ipynb`).
-- **Graphs/**: Notebooks demonstrating LangGraph patterns (e.g., Hello World, Looping).
 
 ---
 
-## Getting Started (zsh/Mac)
+## 🔄 ReAct Agent
 
-### Using pyenv and uv
+* Uses tools (add, subtract, multiply)
+* Iterative reasoning until no tool calls remain
 
-#### 1. Clone the Repository
 
-```zsh
-git clone https://github.com/rdtiv/LangGraph-Course.git
-cd LangGraph-Course
+---
+
+## ✍️ Drafter Agent
+
+* Document creation and editing
+* Supports:
+
+  * update document
+  * save document
+
+---
+
+## 📚 RAG Agent
+
+* Retrieval-Augmented Generation
+* Uses PDF + ChromaDB vector store
+
+---
+
+# 🏗️ Project Structure
+
 ```
-
-#### 2. Install pyenv (if not already installed)
-
-```zsh
-brew update
-brew install pyenv
-```
-
-Add the following to your `~/.zshrc` if it's not already there:
-
-```zsh
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-```
-Restart your terminal or source your `~/.zshrc`:
-
-```zsh
-source ~/.zshrc
-```
-
-#### 3. Install Python Version
-
-```zsh
-pyenv install 3.12.6
-pyenv local 3.12.6
-```
-
-#### 4. Install uv
-
-```zsh
-pipx install uv           # Recommended, or:
-pip install --user uv
-```
-
-If you don't have pipx, install it with:
-
-```zsh
-brew install pipx
-pipx ensurepath
-```
-
-#### 5. Set Up Virtual Environment with uv
-
-```zsh
-uv venv .venv
-source .venv/bin/activate
-```
-
-#### 6. Install Dependencies
-
-```zsh
-uv pip install -r requirements.txt
-```
-
-#### 7. (Optional) Set up Environment Variables
-
-If you need API keys (such as for OpenAI), create a `.env` file in the root directory:
-
-```zsh
-echo "OPENAI_API_KEY=your_openai_key" > .env
-# Add other variables as needed
-```
-
-#### 8. Start JupyterLab
-
-```zsh
-uv pip install jupyterlab  # Only if not already installed
-jupyter lab
+.
+├── Agents/
+│   ├── Agent_Bot.py
+│   ├── Memory_Agent.py
+│   ├── ReAct.py
+│   ├── Drafter.py
+│   ├── RAG_Agent.py
+│   └── data (chroma + pdf)
+├── app/
+│   └── main.py
+├── k8s/
+│   ├── deployment.yaml
+│   └── service.yaml
+├── Dockerfile
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## Usage
+# ⚙️ Setup Instructions
 
-- Open and run Jupyter notebooks in `Graphs/` and `Exercises/` for hands-on practice and exploration.
-- Run agent scripts in `Agents/` for more advanced experiments.
-- All code is designed to work in a local, isolated Python environment managed by pyenv and uv.
+## 1. Start Minikube
 
----
-
-## Exercises
-
-- Explore the `Exercises/` directory for self-contained solutions to LangGraph problems.
-- Example notebooks:
-  - `Exercise_Graph1.ipynb`: Agent state and basic graph usage.
-  - `Exercise_Graph2.ipynb`: User input and graph visualization.
-  - `Exercise_Graph3.ipynb`: Personalization and skills-based responses.
-  - `Exercise_Graph4.ipynb`, `Exercise_Graph5.ipynb`: Advanced graph operations.
-
----
-
-## Requirements
-
-Core dependencies (see `requirements.txt` for full list):
-
-- langgraph
-- langchain
-- ipython
-- langchain_openai
-- langchain_community
-- dotenv
-- typing
-- chromadb
-- langchain_chroma
-
-Install all dependencies with:
-
-```zsh
-uv pip install -r requirements.txt
+```
+minikube start
 ```
 
+---
 
-## Star History
+## 2. Build Docker Image
 
-[![Star History Chart](https://api.star-history.com/svg?repos=iamvaibhavmehra/LangGraph-Course-freeCodeCamp&type=Date)](https://www.star-history.com/#iamvaibhavmehra/LangGraph-Course-freeCodeCamp&Date)
+```
+docker build -t agentic-ai:v1 .
+minikube image load agentic-ai:v1
+```
 
+---
+
+## 3. Deploy to Kubernetes
+
+```
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
+
+---
+
+## 4. Port Forward
+
+```
+kubectl port-forward svc/agentic-ai-service 8080:8000
+```
+
+---
+
+# 🔑 Environment Variables
+
+## OpenAI (Paid)
+
+```
+OPENAI_API_KEY=your-key
+```
+
+## OR Gemini (Free - Recommended for Testing)
+
+```
+GOOGLE_API_KEY=your-key
+```
+
+---
+
+# 🧪 API Testing
+
+## Agent Bot
+
+```
+curl -X POST http://localhost:8080/api/agent-bot/chat \
+-H "Content-Type: application/json" \
+-d '{"message": "What is LangGraph?"}'
+```
+
+---
+
+## Memory Agent
+
+```
+curl -X POST http://localhost:8080/api/memory/chat \
+-H "Content-Type: application/json" \
+-d '{"session_id": "user1", "message": "My name is Saurabh"}'
+```
+
+---
+
+## ReAct Agent
+
+```
+curl -X POST http://localhost:8080/api/react/chat \
+-H "Content-Type: application/json" \
+-d '{"message": "Add 10 and 20"}'
+```
+
+---
+
+## Drafter Agent
+
+```
+curl -X POST http://localhost:8080/api/drafter/chat \
+-H "Content-Type: application/json" \
+-d '{"session_id": "doc1", "message": "Create a document about Kubernetes"}'
+```
+
+---
+
+## RAG Agent
+
+```
+curl -X POST http://localhost:8080/api/rag/chat \
+-H "Content-Type: application/json" \
+-d '{"message": "Summarize stock market performance"}'
+```
+
+---
+
+# ❤️ Health Check
+
+```
+curl http://localhost:8080/health
+```
+
+---
+
+# ⚠️ Notes
+
+* OpenAI requires billing enabled
+* Gemini can be used as a free alternative
+* Memory is in-memory (not persistent)
+* RAG uses local PDF + ChromaDB
+
+---
