@@ -184,7 +184,7 @@ Screenshots :
 
 <img width="1850" height="1080" alt="image" src="https://github.com/user-attachments/assets/1e56be04-d868-421f-945f-b406c4daa418" />
 <img width="1850" height="1080" alt="image" src="https://github.com/user-attachments/assets/4f251b7a-86e5-4b19-8f32-b7566d8aa9ff" />
-![Uploading image.png…]()
+<img width="1850" height="1080" alt="image" src="https://github.com/user-attachments/assets/acb01394-54e0-45f1-9129-4ca520470d2c" />
 
 
 
