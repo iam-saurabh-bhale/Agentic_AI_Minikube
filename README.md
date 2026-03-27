@@ -182,9 +182,9 @@ curl http://localhost:8080/health
 
 Screenshots :
 
-<img width="1850" height="1080" alt="image" src="https://github.com/user-attachments/assets/1e56be04-d868-421f-945f-b406c4daa418" />
-<img width="1850" height="1080" alt="image" src="https://github.com/user-attachments/assets/4f251b7a-86e5-4b19-8f32-b7566d8aa9ff" />
-<img width="1850" height="1080" alt="image" src="https://github.com/user-attachments/assets/acb01394-54e0-45f1-9129-4ca520470d2c" />
+<img width="1864" height="1070" alt="image" src="https://github.com/user-attachments/assets/93c8586c-404c-4c23-a52f-e8547258cbd7" />
+<img width="1864" height="1070" alt="image" src="https://github.com/user-attachments/assets/64cdd10e-0e67-4246-b7ee-908348987c2a" />
+<img width="1864" height="1070" alt="image" src="https://github.com/user-attachments/assets/e0e9290a-f0ac-4e17-8713-1e2465170cd8" />
 
 
 
